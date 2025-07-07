@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minijuego - Atrapa el pez</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      background-color: #e0f7fa;
+    }
+    h1 {
+      color: #00796b;
+    }
+    #game-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 30px auto;
+      border: 3px solid #00796b;
+      background-color: #b2ebf2;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    #target {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+    }
+    #target img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #00796b;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004d40;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐟 ¡Atrapa al pez!</h1>
+  <p>Haz clic en el pez para sumar puntos y relajarte 😎</p>
+  <div id="game-container">
+    <div id="target">
+      <img src="{{ url_for('static', filename='img/fish.png') }}" alt="pez">
+    </div>
+  </div>
+  <p id="score">Puntaje: 0</p>
+  <a href="/create"><button>Volver a escribir la carta ✍️</button></a>
+
+  <script>
+    const target = document.getElementById('target');
+    const container = document.getElementById('game-container');
+    const scoreDisplay = document.getElementById('score');
+    let score = 0;
+
+    function moveTarget() {
+      const maxX = container.clientWidth - target.clientWidth;
+      const maxY = container.clientHeight - target.clientHeight;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+      target.style.left = x + 'px';
+      target.style.top = y + 'px';
+    }
+
+    target.addEventListener('click', () => {
+      score++;
+      scoreDisplay.textContent = 'Puntaje: ' + score;
+      moveTarget();
+    });
+
+    moveTarget();
+  </script>
+</body>
+</html>
